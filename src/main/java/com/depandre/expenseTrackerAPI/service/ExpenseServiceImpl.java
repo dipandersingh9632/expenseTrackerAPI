@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +55,21 @@ public class ExpenseServiceImpl implements ExpenseService{
     public List<Expense> readByCategory(String category, Pageable page) {
         /* this function findByCategory that JPA will implements need to require 2 parameter
         1. your filtering entity
-        2. Pageable attribute */
+        2. Pageable attribute to apply pagination and sorting */
         return expenseRepository.findByCategory(category, page).toList();
+    }
+
+    @Override
+    public List<Expense> readByName(String keyword, Pageable page) {
+        return expenseRepository.findByNameContaining(keyword, page).toList();
+    }
+
+    @Override
+    public List<Expense> readByDate(Date startDate, Date endDate, Pageable page) {
+        /* If user has not pass the startDate then we will take the startDate as initial Date */
+        if(startDate == null) startDate = new Date(0);
+        /* If user has not pass the endDate then we will take the endDate as currDate */
+        if(endDate == null) endDate = new Date(System.currentTimeMillis());
+        return expenseRepository.findByDateBetween(startDate, endDate, page);
     }
 }

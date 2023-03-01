@@ -4,6 +4,7 @@ import com.depandre.expenseTrackerAPI.entity.Expense;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface ExpenseService {
@@ -15,4 +16,8 @@ public interface ExpenseService {
     public Expense updateExpenseDetails(Long id, Expense expense);
 
     public List<Expense> readByCategory(String category, Pageable page);
+
+    public List<Expense> readByName(String keyword, Pageable page);
+
+    public List<Expense> readByDate(Date startDate, Date endDate, Pageable page);
 }
