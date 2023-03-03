@@ -29,6 +29,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorObject, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ItemExistsAlreadyException.class)
+    public ResponseEntity<ErrorObject> handleItemExistException(ItemExistsAlreadyException ex, WebRequest request){
+        ErrorObject errorObject = new ErrorObject();
+        errorObject.setMessage(ex.getMessage());
+        errorObject.setStatusCode(HttpStatus.CONFLICT.value());
+        errorObject.setTimestamp(new Date());
+        return new ResponseEntity<>(errorObject, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorObject> handleTypeMisMatchException(MethodArgumentTypeMismatchException ex, WebRequest request){
         ErrorObject errorObject = new ErrorObject();
