@@ -7,6 +7,7 @@ import com.depandre.expenseTrackerAPI.excpetions.ResourceNotFoundException;
 import com.depandre.expenseTrackerAPI.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,6 +18,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
 
     @Override
     public User createUser(UserModel userModel) {
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService{
         }
         User newUser = new User();
         BeanUtils.copyProperties(userModel, newUser);
+        newUser.setPassword(bcryptEncoder.encode(newUser.getPassword()));
         return userRepository.save(newUser);
     }
 
@@ -46,7 +50,7 @@ public class UserServiceImpl implements UserService{
             }
             currUser.setEmail(updatedUser.getEmail());
         }
-        if(updatedUser.getPassword() != null) currUser.setPassword(updatedUser.getPassword());
+        if(updatedUser.getPassword() != null) currUser.setPassword(bcryptEncoder.encode(updatedUser.getPassword()));
         if(updatedUser.getAge() != null) currUser.setAge(updatedUser.getAge());
         return userRepository.save(currUser);
     }
