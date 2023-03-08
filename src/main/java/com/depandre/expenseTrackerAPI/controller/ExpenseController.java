@@ -37,6 +37,7 @@ public class ExpenseController {
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/expenses")
     public Expense saveExpenseDetails(@Valid @RequestBody Expense expense){
+        System.out.println(expense.toString());
         return expenseService.saveExpenseDetails(expense);
     }
 
@@ -46,7 +47,7 @@ public class ExpenseController {
     }
 
     @GetMapping("/expenses/category")
-    public List<Expense> getAllExpensesByCategory(@RequestParam("category1") String category, Pageable page){
+    public List<Expense> getAllExpensesByCategory(@RequestParam("category") String category, Pageable page){
         return expenseService.readByCategory(category, page);
     }
 

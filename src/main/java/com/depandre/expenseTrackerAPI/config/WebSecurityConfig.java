@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -32,7 +32,7 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic(Customizer.withDefaults())
-                .userDetailsService(userDetailsService);
+                .userDetailsService(customUserDetailsService);
         return http.build();
     }
 

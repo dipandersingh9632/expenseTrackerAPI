@@ -5,11 +5,13 @@ import com.depandre.expenseTrackerAPI.entity.UserModel;
 
 public interface UserService {
     public User createUser(UserModel userModel);
-    public User read(Long id);
+    public User read();
 
-    public User update(UserModel updatedUser, Long id);
+    public User update(UserModel updatedUser);
 
-    public void delete(Long id);
+    public void delete();
+
+    public User getLoggedInUser();
 
 
 }
