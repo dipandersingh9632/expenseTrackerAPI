@@ -1,4 +1,4 @@
-package com.depandre.expenseTrackerAPI.service;
+package com.depandre.expenseTrackerAPI.security;
 
 import com.depandre.expenseTrackerAPI.entity.User;
 import com.depandre.expenseTrackerAPI.repository.UserRepository;
